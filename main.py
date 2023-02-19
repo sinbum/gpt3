@@ -1,0 +1,44 @@
+import os
+import openai
+
+from gpt.Token import get_token_with_file
+from gpt.Gpt_Api import GptApi
+
+
+def main():
+    # 윈도우 환경에서의 PATH 경로
+    file_path = 'c:\\dev\\token\\gpt_token.txt.txt'
+    token = get_token_with_file(file_path).strip()
+
+    gpt = GptApi(token)
+    # prompt = '계란후라이를 그려줘'
+    # prompt = '다리달린 뱀을 그려줘'
+
+    prompt = 'a painting of a snake sitting in a tree at sunrise in the style of Claude Monet'
+    prompt = 'a painting of a robot standing on the city road at rain weather in the style of Jean-Michel Basquiat'
+    prompt = 'a city at sunrise in a photorealistic style'
+    prompt = 'a bowl of ramen that is a portal to another dimension as digital art'
+    prompt = 'a bowl of ramen that is a portal to another dimension in the style of Jean-Michel Basquiat'
+    prompt = 'a brand logo that handsome guy face with sunglasses'
+    prompt = 'Create an image of a majestic mountain with a rainbow in the background'
+    prompt = 'Create an abstract image of a snake with six legs.'
+    prompt = 'Create an image of a snake with six legs.'
+    prompt = '''심리상담서비스 프로그램을 만들고싶은데 투자를 받아야해. 심리상담 서비스의 자금 조달 계획을 리스트로 작성해줘'''
+
+    # prompt = '상체는 뱀의 모습이고 하체는 다리가 6개 달린 뱀을 그려줘'
+    print(
+        gpt.generate_text_only_answer(prompt)
+    )
+
+    # txt = """.\n\n1\ubc88 \ubb38\ub2e8\n\uc11c\uc6b8\uc740 \ud55c\uad6d\uc758 \uc218\ub3c4\ub85c \uc54c\ub824\uc838 \uc788\uc2b5\ub2c8\ub2e4. \uc11c\uc6b8\uc740 \uc5ed\uc0ac\uc801\uc778 \uac74\ucd95\ubb3c\uacfc \ub2e4\uc591\ud55c \ubb38\ud654\uc640 \uc5d4\ud130\ud14c\uc778\uba3c\ud2b8\ub97c \uc81c\uacf5\ud558\ub294 \uad11\uace0 \uc911\uc2ec\uc758 \ub3c4\uc2dc\ub85c \uc54c\ub824\uc838 \uc788\uc2b5\ub2c8\ub2e4. \uc11c\uc6b8\uc758 \uad00\uad11\uc9c0\ub294 \ub2e4\uc591\ud558\uace0 \ub9e4\ub825\uc801\uc785\ub2c8\ub2e4. \uc774 \ube14\ub85c\uadf8 \uae00\uc5d0\uc11c\ub294 \uc11c\uc6b8\uc758 \uad00\uad11\uc9c0\ub97c \uc18c\uac1c\ud558\uace0 \uc788\uc2b5\ub2c8\ub2e4. \n\n![Alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Gyeongbokgung_Palace_in_Seoul_%28cropped%29.jpg/800px-Gyeongbokgung_Palace_in_Seoul_%28cropped%29.jpg)\n\n2\ubc88 \ubb38\ub2e8\n\uc11c\uc6b8\uc758 \uad00\uad11\uc9c0 \uc911 \uac00\uc7a5 \uc720\uba85\ud55c \uacf3\uc740 \uacbd\ubcf5\uad81\uc785\ub2c8\ub2e4. \uacbd\ubcf5\uad81\uc740 \uc870\uc120 \uc2dc\ub300\uc758 \uc655\uad81\uc73c\ub85c, \uc11c\uc6b8\uc758 \uc911\uc2ec\uc5d0 \uc704\uce58\ud574 \uc788\uc2b5\ub2c8\ub2e4. \uacbd\ubcf5\uad81\uc740 \uc5ed\uc0ac\uc801\uc778 \uac74\ucd95\ubb3c\uacfc \uc815\uc6d0, \uc804\uc2dc\uad00 \ub4f1\uc744 \uac16\ucd94\uace0 \uc788\uc2b5\ub2c8\ub2e4. \uacbd\ubcf5\uad81\uc740 \uc5ec\ub7ec\ubd84\uc774 \uc5ed\uc0ac\uc801\uc778 \ubd84\uc704\uae30\ub97c \ub290\ub07c\uba70 \uc990\uae38 \uc218 \uc788\ub294 \uc88b\uc740 \uacf3\uc785\ub2c8\ub2e4.\n\n![Alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Gyeongbokgung_Palace_in_Seoul_%28cropped%29.jpg/800px-Gyeongbokgung_Palace_in_Seoul_%28cropped%29.jpg)\n\n3\ubc88 \ubb38\ub2e8\n\uc11c\uc6b8\uc758 \uad00\uad11\uc9c0 \uc911 \ub610 \ub2e4\ub978 \uc720\uba85\ud55c \uacf3\uc740 \ub0a8\uc0b0\ud0c0\uc6cc\uc785\ub2c8\ub2e4. \ub0a8\uc0b0\ud0c0\uc6cc\ub294 \uc11c\uc6b8\uc758 \uc911\uc2ec\uc5d0 \uc704\uce58\ud574 \uc788\uc2b5\ub2c8\ub2e4. \ub0a8\uc0b0\ud0c0\uc6cc\ub294 \uc5ec\ub7ec\ubd84\uc774 \uc11c\uc6b8\uc758 \uc804\ub9dd\uc744 \uac10\uc0c1\ud560 \uc218 \uc788\ub294 \uc88b\uc740 \uacf3\uc785\ub2c8\ub2e4. \ub0a8\uc0b0\ud0c0\uc6cc\ub294 \uc5ec\ub7ec\ubd84\uc774 \uc990\uae38 \uc218 \uc788\ub294 \ub2e4\uc591\ud55c \ub180\uc774\ub97c \uc81c\uacf5\ud569\ub2c8\ub2e4. \ub610\ud55c \ub0a8\uc0b0\ud0c0\uc6cc\ub294 \uc5ec\ub7ec\ubd84\uc774 \uc5ec\ub7ec\uac00\uc9c0 \uc74c\uc2dd\uc744 \uc990\uae38 \uc218 \uc788\ub294 \uc88b\uc740 \uacf3\uc785\ub2c8\ub2e4.\n\n![Alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Namsan_Seoul_Tower_%28cropped%29.jpg/800px-Namsan_Seoul_Tower_%28cropped%29.jpg)"""
+    # txt = """.\n\n1\ubc88 \ubb38\ub2e8\n\uc11c\uc6b8\uc740 \ud55c\uad6d\uc758 \uc218\ub3c4\ub85c \uc54c\ub824\uc838 \uc788\uc2b5\ub2c8\ub2e4. \uc11c\uc6b8\uc740 \uc5ed\uc0ac\uc801\uc778 \uac74\ucd95\ubb3c\uacfc \ub2e4\uc591\ud55c \ubb38\ud654\uc640 \uc5d4\ud130\ud14c\uc778\uba3c\ud2b8\ub97c \uc81c\uacf5\ud558\ub294 \uad11\uace0 \uc911\uc2ec\uc758 \ub3c4\uc2dc\ub85c \uc54c\ub824\uc838 \uc788\uc2b5\ub2c8\ub2e4. \uc11c\uc6b8\uc758 \uad00\uad11\uc9c0\ub294 \ub2e4\uc591\ud558\uace0 \ub9e4\ub825\uc801\uc785\ub2c8\ub2e4. \uc774 \ube14\ub85c\uadf8 \uae00\uc5d0\uc11c\ub294 \uc11c\uc6b8\uc758 \uad00\uad11\uc9c0\ub97c \uc18c\uac1c\ud558\uace0 \uc788\uc2b5\ub2c8\ub2e4. \n\n![Alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Gyeongbokgung_Palace_in_Seoul_%28cropped%29.jpg/800px-Gyeongbokgung_Palace_in_Seoul_%28cropped%29.jpg)\n\n2\ubc88 \ubb38\ub2e8\n\uc11c\uc6b8\uc758 \uad00\uad11\uc9c0 \uc911 \uac00\uc7a5 \uc720\uba85\ud55c \uacf3\uc740 \uacbd\ubcf5\uad81\uc785\ub2c8\ub2e4. \uacbd\ubcf5\uad81\uc740 \uc870\uc120 \uc2dc\ub300\uc758 \uc655\uad81\uc73c\ub85c, \uc11c\uc6b8\uc758 \uc911\uc2ec\uc5d0 \uc704\uce58\ud574 \uc788\uc2b5\ub2c8\ub2e4. \uacbd\ubcf5\uad81\uc740 \uc5ed\uc0ac\uc801\uc778 \uac74\ucd95\ubb3c\uacfc \uc815\uc6d0, \uc804\uc2dc\uad00 \ub4f1\uc744 \uac16\ucd94\uace0 \uc788\uc2b5\ub2c8\ub2e4. \uacbd\ubcf5\uad81\uc740 \uc5ec\ub7ec\ubd84\uc774 \uc5ed\uc0ac\uc801\uc778 \ubd84\uc704\uae30\ub97c \ub290\ub07c\uba70 \uc990\uae38 \uc218 \uc788\ub294 \uc88b\uc740 \uacf3\uc785\ub2c8\ub2e4.\n\n![Alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Gyeongbokgung_Palace_in_Seoul_%28cropped%29.jpg/800px-Gyeongbokgung_Palace_in_Seoul_%28cropped%29.jpg)\n\n3\ubc88 \ubb38\ub2e8\n\uc11c\uc6b8\uc758 \uad00\uad11\uc9c0 \uc911 \ub610 \ub2e4\ub978 \uc720\uba85\ud55c \uacf3\uc740 \ub0a8\uc0b0\ud0c0\uc6cc\uc785\ub2c8\ub2e4. \ub0a8\uc0b0\ud0c0\uc6cc\ub294 \uc11c\uc6b8\uc758 \uc911\uc2ec\uc5d0 \uc704\uce58\ud574 \uc788\uc2b5\ub2c8\ub2e4. \ub0a8\uc0b0\ud0c0\uc6cc\ub294 \uc5ec\ub7ec\ubd84\uc774 \uc11c\uc6b8\uc758 \uc804\ub9dd\uc744 \uac10\uc0c1\ud560 \uc218 \uc788\ub294 \uc88b\uc740 \uacf3\uc785\ub2c8\ub2e4. \ub0a8\uc0b0\ud0c0\uc6cc\ub294 \uc5ec\ub7ec\ubd84\uc774 \uc990\uae38 \uc218 \uc788\ub294 \ub2e4\uc591\ud55c \ub180\uc774\ub97c \uc81c\uacf5\ud569\ub2c8\ub2e4. \ub610\ud55c \ub0a8\uc0b0\ud0c0\uc6cc\ub294 \uc5ec\ub7ec\ubd84\uc774 \uc5ec\ub7ec\uac00\uc9c0 \uc74c\uc2dd\uc744 \uc990\uae38 \uc218 \uc788\ub294 \uc88b\uc740 \uacf3\uc785\ub2c8\ub2e4.\n\n!"""
+
+    # print(txt.encode('utf-8'))
+    # print(gpt.generate_text_only_answer(
+    #     '잘생긴 강아지의 사진 3개를 만들어줘'))
+
+    # print(gpt.generate_image(prompt))
+
+
+if __name__ == '__main__':
+    main()
